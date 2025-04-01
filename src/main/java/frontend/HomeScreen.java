@@ -8,12 +8,14 @@ import java.awt.*;
 
 public class HomeScreen extends JFrame {
     private final DicasManager dicasManager;
+    private final AudioManager audioManager;
     private JButton btnExibirDica;
     private JButton btnEditarDicas;
     private JLabel lblTitulo;
 
     public HomeScreen(DicasManager dicasManager) {
         this.dicasManager = dicasManager;
+        this.audioManager = new AudioManager();
         initComponents();
     }
 
@@ -35,7 +37,6 @@ public class HomeScreen extends JFrame {
         };
         pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(150, 150, 150, 150));
         
-        AudioManager audioManager = new AudioManager();
         audioManager.playBackgroundMusic(); // Toca a música de fundo ao iniciar
 
         // Título
@@ -63,7 +64,7 @@ public class HomeScreen extends JFrame {
         btnEditarDicas = new JButton("Editar Dicas");
         btnEditarDicas.setFont(new Font("Arial", Font.PLAIN, 14));
         btnEditarDicas.addActionListener(_ -> {
-            EditarDicasScreen editarScreen = new EditarDicasScreen(dicasManager, HomeScreen.this);
+            EditarDicasScreen editarScreen = new EditarDicasScreen(dicasManager, HomeScreen.this, audioManager);
             editarScreen.setVisible(true);
             audioManager.playButtonSound();
             HomeScreen.this.setVisible(false);

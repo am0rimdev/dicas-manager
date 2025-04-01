@@ -23,10 +23,10 @@ public class EditarDicasScreen extends JFrame {
     private JButton btnVoltar;
     private int indiceSelecionado = -1;
 
-    public EditarDicasScreen(DicasManager dicasManager, JFrame parent) {
+    public EditarDicasScreen(DicasManager dicasManager, JFrame parent, AudioManager audioManager) {
         this.dicasManager = dicasManager;
         this.parent = parent;
-        this.audioManager = new AudioManager();
+        this.audioManager = audioManager;
         initComponents();
         carregarListaDicas();
     }
