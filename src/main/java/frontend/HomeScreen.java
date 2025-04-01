@@ -1,8 +1,3 @@
-/**
- * @author:
- * @description: Tela principal do aplicativo de dicas
- */
-
 package frontend;
 
 import backend.DicasManager;
@@ -12,7 +7,7 @@ import java.awt.event.*;
 
 public class HomeScreen extends JFrame {
     private final DicasManager dicasManager;
-    private JButton btnExibirDica; // Prefixo btn para botões
+    private JButton btnExibirDica;
     private JButton btnEditarDicas;
     private JLabel lblTitulo;
 
@@ -24,21 +19,31 @@ public class HomeScreen extends JFrame {
     private void initComponents() {
         setTitle("Home - Projeto Dicas");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 250);
+        setSize(600, 450);
         setLocationRelativeTo(null);
         
         // Painel principal com layout em grade
-        JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10));
-        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Carrega o GIF como fundo
+                ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/img1.gif"));
+                g.drawImage(gifIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(150, 150, 150, 150));
         
         // Título
         lblTitulo = new JLabel("Bem-vindo ao Projeto Dicas", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
+        lblTitulo.setFont(new Font("Arial", Font.BOLD, 20));
+        lblTitulo.setForeground(Color.black); // Texto branco para contrastar com o fundo
         
         // Painel para botões
         JPanel pnlBotoes = new JPanel(new GridLayout(2, 1, 10, 10));
+        pnlBotoes.setOpaque(false); // Painel transparente
         
-        // Botão para exibir a dica do dia
+        // Botão para exibir a dica do dia 
         btnExibirDica = new JButton("Exibir Dica do Dia");
         btnExibirDica.setFont(new Font("Arial", Font.PLAIN, 14));
         btnExibirDica.addActionListener((ActionEvent e) -> {
@@ -53,7 +58,6 @@ public class HomeScreen extends JFrame {
         btnEditarDicas = new JButton("Editar Dicas");
         btnEditarDicas.setFont(new Font("Arial", Font.PLAIN, 14));
         btnEditarDicas.addActionListener((ActionEvent e) -> {
-            // Abre a tela de edição e esconde a tela principal
             EditarDicasScreen editarScreen = new EditarDicasScreen(dicasManager, HomeScreen.this);
             editarScreen.setVisible(true);
             HomeScreen.this.setVisible(false);

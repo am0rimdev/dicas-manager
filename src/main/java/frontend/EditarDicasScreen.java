@@ -1,8 +1,3 @@
-/**
- * @author:
- * @description: Tela para edição de dicas com operações CRUD completas
- */
-
 package frontend;
 
 import backend.DicasManager;
@@ -38,51 +33,135 @@ public class EditarDicasScreen extends JFrame {
         setSize(600, 500);
         setLocationRelativeTo(null);
 
-        // Painel principal usando BorderLayout
-        JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10));
+        // Painel principal com GIF de fundo
+        JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Carrega o GIF como fundo
+                ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/img2.gif"));
+                g.drawImage(gifIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         pnlPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Painel norte para adicionar nova dica
         JPanel pnlNorte = new JPanel(new BorderLayout(5, 0));
+        pnlNorte.setOpaque(false);
+        
         JPanel pnlAdicionarDica = new JPanel(new BorderLayout(5, 0));
+        pnlAdicionarDica.setOpaque(false);
+        
         JLabel lblNovaDica = new JLabel("Nova Dica:");
+        lblNovaDica.setForeground(Color.WHITE);
         txtNovaDica = new JTextField();
         btnAdicionarDica = new JButton("Adicionar");
+        
+        // Estilização dos botões
+        btnAdicionarDica.setContentAreaFilled(false);
+        btnAdicionarDica.setOpaque(true);
+        btnAdicionarDica.setBackground(new Color(255, 255, 255, 150));
+        btnAdicionarDica.setForeground(Color.BLACK);
+        btnAdicionarDica.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
         
         pnlAdicionarDica.add(lblNovaDica, BorderLayout.WEST);
         pnlAdicionarDica.add(txtNovaDica, BorderLayout.CENTER);
         pnlAdicionarDica.add(btnAdicionarDica, BorderLayout.EAST);
         pnlNorte.add(pnlAdicionarDica, BorderLayout.NORTH);
         
-        // Adicionar campo de pesquisa
+        // Painel de pesquisa
         JPanel pnlPesquisar = new JPanel(new BorderLayout(5, 0));
+        pnlPesquisar.setOpaque(false);
+        
         JLabel lblPesquisar = new JLabel("Pesquisar:");
+        lblPesquisar.setForeground(Color.WHITE);
         txtPesquisarDica = new JTextField();
         btnPesquisarDica = new JButton("Pesquisar");
+        
+        // Estilização do botão pesquisar
+        btnPesquisarDica.setContentAreaFilled(false);
+        btnPesquisarDica.setOpaque(true);
+        btnPesquisarDica.setBackground(new Color(255, 255, 255, 150));
+        btnPesquisarDica.setForeground(Color.BLACK);
+        btnPesquisarDica.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
         
         pnlPesquisar.add(lblPesquisar, BorderLayout.WEST);
         pnlPesquisar.add(txtPesquisarDica, BorderLayout.CENTER);
         pnlPesquisar.add(btnPesquisarDica, BorderLayout.EAST);
         
         JPanel pnlBotoes = new JPanel(new GridLayout(1, 2, 5, 0));
+        pnlBotoes.setOpaque(false);
         
         pnlNorte.add(pnlPesquisar, BorderLayout.CENTER);
         pnlNorte.add(pnlBotoes, BorderLayout.SOUTH);
         
         // Painel central com lista de dicas
         JPanel pnlCentral = new JPanel(new BorderLayout());
+        pnlCentral.setOpaque(false);
+        
         mdlDicas = new DefaultListModel<>();
-        lstDicas = new JList<>(mdlDicas);
+        lstDicas = new JList<>(mdlDicas) {
+            @Override
+            public Dimension getPreferredScrollableViewportSize() {
+                Dimension size = super.getPreferredScrollableViewportSize();
+                size.height = getModel().getSize() * 45; // 45px por item
+                return size;
+            }
+        };
+        
         lstDicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        lstDicas.setOpaque(false);
+        lstDicas.setForeground(Color.WHITE);
+        lstDicas.setFixedCellHeight(45);
+        lstDicas.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, 
+                boolean isSelected, boolean cellHasFocus) {
+                
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                setOpaque(true);
+                setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10),
+                    BorderFactory.createLineBorder(new Color(255, 255, 255, 50), 1, true)
+                ));
+                
+                if (isSelected) {
+                    setBackground(new Color(70, 70, 70, 200)); // Cinza escuro para selecionado
+                    setForeground(Color.WHITE);
+                } else {
+                    setBackground(new Color(100, 100, 100, 150)); // Cinza médio para não selecionado
+                    setForeground(Color.WHITE);
+                }
+                
+                return this;
+            }
+        });
+
         JScrollPane scrDicas = new JScrollPane(lstDicas);
+        scrDicas.setOpaque(false);
+        scrDicas.getViewport().setOpaque(false);
         scrDicas.setBorder(BorderFactory.createTitledBorder("Lista de Dicas"));
+        ((javax.swing.border.TitledBorder)scrDicas.getBorder()).setTitleColor(Color.WHITE);
+        
         pnlCentral.add(scrDicas, BorderLayout.CENTER);
         
         // Painel sul para botões de ação
         JPanel pnlSul = new JPanel(new GridLayout(1, 3, 5, 0));
+        pnlSul.setOpaque(false);
+        
         btnEditarDica = new JButton("Editar Selecionada");
         btnRemoverDica = new JButton("Remover Selecionada");
         btnVoltar = new JButton("Voltar");
+        
+        // Estilização dos botões
+        for (JButton btn : new JButton[]{btnEditarDica, btnRemoverDica, btnVoltar}) {
+            btn.setContentAreaFilled(false);
+            btn.setOpaque(true);
+            btn.setBackground(new Color(255, 255, 255, 150));
+            btn.setForeground(Color.BLACK);
+            btn.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
+        }
         
         pnlSul.add(btnEditarDica);
         pnlSul.add(btnRemoverDica);
