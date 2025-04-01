@@ -1,5 +1,5 @@
 /**
- * @author:
+ * @author:Emily Júnia, Micael Pereira, Nífane Borges, Vinícius Alves Amorim
  * @description: Gerenciador de dicas que implementa operações CRUD
  */
 

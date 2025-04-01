@@ -1,3 +1,8 @@
+/**
+ * @author: Emily Júnia, Micael Pereira, Nífane Borges, Vinícius Alves Amorim
+ * @description: Arquivo front da tela de edição de dicas
+ */
+
 package frontend;
 
 import backend.DicasManager;
