@@ -5,7 +5,6 @@ import utils.AudioManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class HomeScreen extends JFrame {
     private final DicasManager dicasManager;
