@@ -30,7 +30,7 @@ public class EditarDicasScreen extends JFrame {
     private void initComponents() {
         setTitle("Editar Dicas");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(600, 500);
+        setSize(600, 450);
         setLocationRelativeTo(null);
 
         JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10)) {
@@ -102,7 +102,7 @@ public class EditarDicasScreen extends JFrame {
             @Override
             public Dimension getPreferredScrollableViewportSize() {
                 Dimension size = super.getPreferredScrollableViewportSize();
-                size.height = getModel().getSize() * 45; 
+                size.height = getModel().getSize() * 60; 
                 return size;
             }
         };

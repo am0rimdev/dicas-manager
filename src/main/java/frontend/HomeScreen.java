@@ -36,7 +36,7 @@ public class HomeScreen extends JFrame {
         
         // Título
         lblTitulo = new JLabel("Bem-vindo ao Projeto Dicas", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Jaro", Font.BOLD, 20));
+        lblTitulo.setFont(new Font("serif", Font.BOLD, 20));
         lblTitulo.setForeground(Color.black); // Texto branco para contrastar com o fundo
         
         // Painel para botões
