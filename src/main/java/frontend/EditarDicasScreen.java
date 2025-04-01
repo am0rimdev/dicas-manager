@@ -1,6 +1,8 @@
 package frontend;
 
 import backend.DicasManager;
+import utils.AudioManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 public class EditarDicasScreen extends JFrame {
     private final DicasManager dicasManager;
     private final JFrame parent;
+    private final AudioManager audioManager;
     private JTextField txtNovaDica;
     private JButton btnAdicionarDica;
     private JTextField txtPesquisarDica;
@@ -23,6 +26,7 @@ public class EditarDicasScreen extends JFrame {
     public EditarDicasScreen(DicasManager dicasManager, JFrame parent) {
         this.dicasManager = dicasManager;
         this.parent = parent;
+        this.audioManager = new AudioManager();
         initComponents();
         carregarListaDicas();
     }
@@ -37,7 +41,7 @@ public class EditarDicasScreen extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/img2.gif"));
+                ImageIcon gifIcon = new ImageIcon(getClass().getResource("/resources/images/img2.gif"));
                 g.drawImage(gifIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
@@ -187,6 +191,7 @@ public class EditarDicasScreen extends JFrame {
         
         // Evento para adicionar dica
         btnAdicionarDica.addActionListener((ActionEvent e) -> {
+            audioManager.playButtonSound();
             String novaDica = txtNovaDica.getText().trim();
             if (!novaDica.isEmpty()) {
                 dicasManager.adicionarFrase(novaDica);
@@ -199,6 +204,7 @@ public class EditarDicasScreen extends JFrame {
         
         // Evento para pesquisar dica
         btnPesquisarDica.addActionListener((ActionEvent e) -> {
+            audioManager.playButtonSound();
             pesquisarDica();
         });
         
@@ -214,16 +220,19 @@ public class EditarDicasScreen extends JFrame {
         
         // Evento para editar dica selecionada
         btnEditarDica.addActionListener((ActionEvent e) -> {
+            audioManager.playButtonSound();
             editarDicaSelecionada();
         });
         
         // Evento para remover dica selecionada
         btnRemoverDica.addActionListener((ActionEvent e) -> {
+            audioManager.playButtonSound();
             removerDicaSelecionada();
         });
         
         // Evento para voltar à tela Home
         btnVoltar.addActionListener((ActionEvent e) -> {
+            audioManager.playButtonSound();
             this.dispose();
             parent.setVisible(true);
         });
