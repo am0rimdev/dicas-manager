@@ -33,12 +33,10 @@ public class EditarDicasScreen extends JFrame {
         setSize(600, 500);
         setLocationRelativeTo(null);
 
-        // Painel principal com GIF de fundo
         JPanel pnlPrincipal = new JPanel(new BorderLayout(10, 10)) {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Carrega o GIF como fundo
                 ImageIcon gifIcon = new ImageIcon(getClass().getResource("/images/img2.gif"));
                 g.drawImage(gifIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
@@ -53,16 +51,16 @@ public class EditarDicasScreen extends JFrame {
         pnlAdicionarDica.setOpaque(false);
         
         JLabel lblNovaDica = new JLabel("Nova Dica:");
-        lblNovaDica.setForeground(Color.WHITE);
+        lblNovaDica.setForeground(Color.pink);
         txtNovaDica = new JTextField();
         btnAdicionarDica = new JButton("Adicionar");
         
         // Estilização dos botões
         btnAdicionarDica.setContentAreaFilled(false);
         btnAdicionarDica.setOpaque(true);
-        btnAdicionarDica.setBackground(new Color(255, 255, 255, 150));
-        btnAdicionarDica.setForeground(Color.BLACK);
-        btnAdicionarDica.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
+        btnAdicionarDica.setBackground(new Color(140, 29, 24));
+        btnAdicionarDica.setForeground(Color.pink);
+        btnAdicionarDica.setBorder(BorderFactory.createLineBorder(new Color(140, 29, 24)));
         
         pnlAdicionarDica.add(lblNovaDica, BorderLayout.WEST);
         pnlAdicionarDica.add(txtNovaDica, BorderLayout.CENTER);
@@ -74,16 +72,16 @@ public class EditarDicasScreen extends JFrame {
         pnlPesquisar.setOpaque(false);
         
         JLabel lblPesquisar = new JLabel("Pesquisar:");
-        lblPesquisar.setForeground(Color.WHITE);
+        lblPesquisar.setForeground(Color.pink);
         txtPesquisarDica = new JTextField();
         btnPesquisarDica = new JButton("Pesquisar");
         
         // Estilização do botão pesquisar
         btnPesquisarDica.setContentAreaFilled(false);
         btnPesquisarDica.setOpaque(true);
-        btnPesquisarDica.setBackground(new Color(255, 255, 255, 150));
-        btnPesquisarDica.setForeground(Color.BLACK);
-        btnPesquisarDica.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
+        btnPesquisarDica.setBackground(new Color(140, 29, 24));
+        btnPesquisarDica.setForeground(Color.pink);
+        btnPesquisarDica.setBorder(BorderFactory.createLineBorder(new Color(140, 29, 24)));
         
         pnlPesquisar.add(lblPesquisar, BorderLayout.WEST);
         pnlPesquisar.add(txtPesquisarDica, BorderLayout.CENTER);
@@ -104,14 +102,14 @@ public class EditarDicasScreen extends JFrame {
             @Override
             public Dimension getPreferredScrollableViewportSize() {
                 Dimension size = super.getPreferredScrollableViewportSize();
-                size.height = getModel().getSize() * 45; // 45px por item
+                size.height = getModel().getSize() * 45; 
                 return size;
             }
         };
         
         lstDicas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         lstDicas.setOpaque(false);
-        lstDicas.setForeground(Color.WHITE);
+        lstDicas.setForeground(Color.pink);
         lstDicas.setFixedCellHeight(45);
         lstDicas.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -123,17 +121,16 @@ public class EditarDicasScreen extends JFrame {
                 setOpaque(true);
                 setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createEmptyBorder(5, 10, 5, 10),
-                    BorderFactory.createLineBorder(new Color(255, 255, 255, 50), 1, true)
+                    BorderFactory.createLineBorder(new Color(140, 29, 24, 50), 1, true)
                 ));
                 
                 if (isSelected) {
-                    setBackground(new Color(70, 70, 70, 200)); // Cinza escuro para selecionado
-                    setForeground(Color.WHITE);
+                    setBackground(new Color(241, 173, 189, 180));
+                    setForeground(Color.white);
                 } else {
-                    setBackground(new Color(100, 100, 100, 150)); // Cinza médio para não selecionado
-                    setForeground(Color.WHITE);
+                    setBackground(new Color(241, 173, 189, 100)); 
+                    setForeground(Color.white);
                 }
-                
                 return this;
             }
         });
@@ -142,7 +139,7 @@ public class EditarDicasScreen extends JFrame {
         scrDicas.setOpaque(false);
         scrDicas.getViewport().setOpaque(false);
         scrDicas.setBorder(BorderFactory.createTitledBorder("Lista de Dicas"));
-        ((javax.swing.border.TitledBorder)scrDicas.getBorder()).setTitleColor(Color.WHITE);
+        ((javax.swing.border.TitledBorder)scrDicas.getBorder()).setTitleColor(Color.pink);
         
         pnlCentral.add(scrDicas, BorderLayout.CENTER);
         
@@ -158,9 +155,9 @@ public class EditarDicasScreen extends JFrame {
         for (JButton btn : new JButton[]{btnEditarDica, btnRemoverDica, btnVoltar}) {
             btn.setContentAreaFilled(false);
             btn.setOpaque(true);
-            btn.setBackground(new Color(255, 255, 255, 150));
-            btn.setForeground(Color.BLACK);
-            btn.setBorder(BorderFactory.createLineBorder(new Color(255, 255, 255, 200)));
+            btn.setBackground(new Color(140, 29, 24));
+            btn.setForeground(Color.pink);
+            btn.setBorder(BorderFactory.createLineBorder(new Color(140, 29, 24)));
         }
         
         pnlSul.add(btnEditarDica);
