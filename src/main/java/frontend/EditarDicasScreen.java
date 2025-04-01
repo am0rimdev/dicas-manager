@@ -102,7 +102,7 @@ public class EditarDicasScreen extends JFrame {
             @Override
             public Dimension getPreferredScrollableViewportSize() {
                 Dimension size = super.getPreferredScrollableViewportSize();
-                size.height = getModel().getSize() * 60; 
+                size.height = getModel().getSize() * 45; 
                 return size;
             }
         };
