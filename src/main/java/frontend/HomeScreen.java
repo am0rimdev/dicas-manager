@@ -51,7 +51,7 @@ public class HomeScreen extends JFrame {
         // Botão para exibir a dica do dia 
         btnExibirDica = new JButton("Exibir Dica do Dia");
         btnExibirDica.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnExibirDica.addActionListener((ActionEvent e) -> {
+        btnExibirDica.addActionListener(_ -> {
             audioManager.playButtonSound();
             String dica = dicasManager.getDicaAleatoria();
             JOptionPane.showMessageDialog(HomeScreen.this, 
@@ -63,7 +63,7 @@ public class HomeScreen extends JFrame {
         // Botão para abrir a tela de edição de dicas
         btnEditarDicas = new JButton("Editar Dicas");
         btnEditarDicas.setFont(new Font("Arial", Font.PLAIN, 14));
-        btnEditarDicas.addActionListener((ActionEvent e) -> {
+        btnEditarDicas.addActionListener(_ -> {
             EditarDicasScreen editarScreen = new EditarDicasScreen(dicasManager, HomeScreen.this);
             editarScreen.setVisible(true);
             audioManager.playButtonSound();

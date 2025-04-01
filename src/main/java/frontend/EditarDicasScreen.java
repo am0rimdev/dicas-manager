@@ -190,7 +190,7 @@ public class EditarDicasScreen extends JFrame {
         });
         
         // Evento para adicionar dica
-        btnAdicionarDica.addActionListener((ActionEvent e) -> {
+        btnAdicionarDica.addActionListener(_ -> {
             audioManager.playButtonSound();
             String novaDica = txtNovaDica.getText().trim();
             if (!novaDica.isEmpty()) {
@@ -203,7 +203,7 @@ public class EditarDicasScreen extends JFrame {
         });
         
         // Evento para pesquisar dica
-        btnPesquisarDica.addActionListener((ActionEvent e) -> {
+        btnPesquisarDica.addActionListener(_ -> {
             audioManager.playButtonSound();
             pesquisarDica();
         });
@@ -219,19 +219,19 @@ public class EditarDicasScreen extends JFrame {
         });
         
         // Evento para editar dica selecionada
-        btnEditarDica.addActionListener((ActionEvent e) -> {
+        btnEditarDica.addActionListener(_ -> {
             audioManager.playButtonSound();
             editarDicaSelecionada();
         });
         
         // Evento para remover dica selecionada
-        btnRemoverDica.addActionListener((ActionEvent e) -> {
+        btnRemoverDica.addActionListener(_ -> {
             audioManager.playButtonSound();
             removerDicaSelecionada();
         });
         
         // Evento para voltar à tela Home
-        btnVoltar.addActionListener((ActionEvent e) -> {
+        btnVoltar.addActionListener(_ -> {
             audioManager.playButtonSound();
             this.dispose();
             parent.setVisible(true);
