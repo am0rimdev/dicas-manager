@@ -1,6 +1,6 @@
 /**
  * @author:Emily Júnia, Micael Pereira, Nífane Borges, Vinícius Alves Amorim
- * @description: Cria o objeto de back-end (a partir do arquivo "dicas.txt") 
+ * @description: Cria o objeto de back-end (a partir do arquivo "dicas.db") 
  * e inicia a interface gráfica na Event Dispatch Thread
  */
 
