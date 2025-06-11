@@ -8,11 +8,14 @@ package com.mycompany.dicas;
 
 import backend.DicasManager;
 import frontend.HomeScreen;
+
 import javax.swing.SwingUtilities;
 
 public class Dicas {
     public static void main(String[] args) {
-        DicasManager dicasManager = new DicasManager("dicas.txt");
+        // Caminho do banco SQLite (arquivo local)
+        String dbUrl = "jdbc:sqlite:dicas.db";
+        DicasManager dicasManager = new DicasManager(dbUrl);
 
         SwingUtilities.invokeLater(() -> {
             new HomeScreen(dicasManager).setVisible(true);

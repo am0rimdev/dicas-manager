@@ -1,7 +1,12 @@
 frontend\HomeScreen.class
 frontend\EditarDicasScreen$3.class
 frontend\EditarDicasScreen.class
+frontend\HomeScreen$1.class
 frontend\EditarDicasScreen$2.class
 backend\DicasManager.class
+frontend\EditarDicasScreen$6.class
+utils\AudioManager.class
 com\mycompany\dicas\Dicas.class
+frontend\EditarDicasScreen$4.class
 frontend\EditarDicasScreen$1.class
+frontend\EditarDicasScreen$5.class
