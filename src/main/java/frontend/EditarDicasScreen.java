@@ -287,6 +287,10 @@ public class EditarDicasScreen extends JFrame {
         for (String dica : dicas) {
             mdlDicas.addElement(dica);
         }
+        
+        // Limpa a seleção após recarregar a lista
+        lstDicas.clearSelection();
+        idSelecionado = -1;
     }
     
     /**
