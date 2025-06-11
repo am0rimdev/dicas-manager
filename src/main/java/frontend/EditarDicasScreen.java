@@ -1,6 +1,7 @@
 /**
  * @author: Emily Júnia, Micael Pereira, Nífane Borges, Vinícius Alves Amorim
- * @description: Arquivo front da tela de edição de dicas
+ * @description: Interface gráfica para gerenciamento de dicas, permitindo adicionar,
+ *               editar, remover e pesquisar dicas no banco de dados.
  */
 
 package frontend;
@@ -26,8 +27,14 @@ public class EditarDicasScreen extends JFrame {
     private JButton btnEditarDica;
     private JButton btnRemoverDica;
     private JButton btnVoltar;
-    private int indiceSelecionado = -1;
+    private int idSelecionado = -1;
 
+    /**
+     * Construtor da tela de edição de dicas
+     * @param dicasManager gerenciador de dicas para operações no banco de dados
+     * @param parent janela pai para controle de visibilidade
+     * @param audioManager gerenciador de áudio para efeitos sonoros
+     */
     public EditarDicasScreen(DicasManager dicasManager, JFrame parent, AudioManager audioManager) {
         this.dicasManager = dicasManager;
         this.parent = parent;
@@ -36,6 +43,9 @@ public class EditarDicasScreen extends JFrame {
         carregarListaDicas();
     }
 
+    /**
+     * Inicializa e configura todos os componentes da interface gráfica
+     */
     private void initComponents() {
         setTitle("Editar Dicas");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -184,6 +194,9 @@ public class EditarDicasScreen extends JFrame {
         configurarEventos();
     }
     
+    /**
+     * Configura todos os eventos dos componentes da interface
+     */
     private void configurarEventos() {
         // Evento ao fechar a janela
         addWindowListener(new WindowAdapter() {
@@ -245,7 +258,12 @@ public class EditarDicasScreen extends JFrame {
         // Evento para seleção na lista
         lstDicas.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                indiceSelecionado = lstDicas.getSelectedIndex();
+                String dicaSelecionada = lstDicas.getSelectedValue();
+                if (dicaSelecionada != null) {
+                    idSelecionado = dicasManager.buscarIndiceDica(dicaSelecionada);
+                } else {
+                    idSelecionado = -1;
+                }
             }
         });
         
@@ -260,6 +278,9 @@ public class EditarDicasScreen extends JFrame {
         });
     }
     
+    /**
+     * Carrega todas as dicas do banco de dados na lista da interface
+     */
     private void carregarListaDicas() {
         mdlDicas.clear();
         ArrayList<String> dicas = dicasManager.listarTodasDicas();
@@ -268,19 +289,31 @@ public class EditarDicasScreen extends JFrame {
         }
     }
     
+    /**
+     * Realiza a pesquisa de uma dica no banco de dados
+     */
     private void pesquisarDica() {
         String texto = txtPesquisarDica.getText().trim();
         if (!texto.isEmpty()) {
-            int indice = dicasManager.buscarIndiceDica(texto);
-            if (indice >= 0) {
-                lstDicas.setSelectedIndex(indice);
-                lstDicas.ensureIndexIsVisible(indice);
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Nenhuma dica encontrada com o texto: " + texto, 
-                    "Resultado da Pesquisa", 
-                    JOptionPane.INFORMATION_MESSAGE);
+            // Busca a dica no banco de dados
+            int id = dicasManager.buscarIndiceDica(texto);
+            if (id >= 0) {
+                // Busca a dica na lista pelo texto
+                String textoLower = texto.toLowerCase();
+                for (int i = 0; i < mdlDicas.getSize(); i++) {
+                    String dica = mdlDicas.getElementAt(i);
+                    if (dica.toLowerCase().contains(textoLower)) {
+                        lstDicas.setSelectedIndex(i);
+                        lstDicas.ensureIndexIsVisible(i);
+                        return;
+                    }
+                }
             }
+            
+            JOptionPane.showMessageDialog(this, 
+                "Nenhuma dica encontrada com o texto: " + texto, 
+                "Resultado da Pesquisa", 
+                JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, 
                 "Digite um texto para pesquisa.", 
@@ -289,65 +322,96 @@ public class EditarDicasScreen extends JFrame {
         }
     }
     
-    private void editarDicaSelecionada() {
-        if (indiceSelecionado < 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Selecione uma dica para editar.", 
-                "Aviso", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+    /**
+     * Exibe uma mensagem de diálogo para o usuário
+     * @param mensagem O texto da mensagem a ser exibida
+     * @param titulo O título da janela de diálogo
+     * @param tipo O tipo de mensagem (ERROR_MESSAGE, INFORMATION_MESSAGE, WARNING_MESSAGE, etc)
+     */
+    private void mostrarMensagem(String mensagem, String titulo, int tipo) {
+        JOptionPane.showMessageDialog(this, mensagem, titulo, tipo);
+    }
+
+    /**
+     * Valida se há uma dica selecionada na lista
+     * @return true se houver uma dica selecionada, false caso contrário
+     */
+    private boolean eSelecaoValida() {
+        if (idSelecionado >= 0) return true;
         
-        String dicaAtual = mdlDicas.getElementAt(indiceSelecionado);
-        String novaDica = JOptionPane.showInputDialog(this, 
-            "Editar dica:", 
-            dicaAtual);
-            
-        if (novaDica != null && !novaDica.trim().isEmpty()) {
-            boolean sucesso = dicasManager.editarFrase(indiceSelecionado, novaDica);
-            if (sucesso) {
-                carregarListaDicas();
-                JOptionPane.showMessageDialog(this, 
-                    "Dica atualizada com sucesso!", 
-                    "Sucesso", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Erro ao atualizar dica.", 
-                    "Erro", 
-                    JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        mostrarMensagem("Selecione uma dica para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return false;
     }
     
-    private void removerDicaSelecionada() {
-        if (indiceSelecionado < 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Selecione uma dica para remover.", 
-                "Aviso", 
-                JOptionPane.WARNING_MESSAGE);
+    /**
+     * Solicita ao usuário uma nova versão da dica através de um diálogo de entrada
+     * @param dicaAtual O texto atual da dica que será editada
+     * @return A nova versão da dica ou null se o usuário cancelar
+     */
+    private String solicitarNovaDica(String dicaAtual) {
+        return JOptionPane.showInputDialog(this, "Editar dica:", dicaAtual);
+    }
+
+    /**
+     * Gerencia o processo de edição de uma dica selecionada
+     * Valida a seleção, solicita a nova versão e atualiza no banco de dados
+     */
+    private void editarDicaSelecionada() {
+        if (!eSelecaoValida()) return;
+        
+        String dicaAtual = lstDicas.getSelectedValue();
+        String novaDica = solicitarNovaDica(dicaAtual);
+        
+        if (novaDica == null || novaDica.trim().isEmpty()) return;
+        
+        boolean sucesso = dicasManager.editarFrase(idSelecionado, novaDica);
+        if (!sucesso) {
+            mostrarMensagem("Erro ao atualizar dica.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        int confirmacao = JOptionPane.showConfirmDialog(this, 
-            "Tem certeza que deseja remover esta dica?", 
-            "Confirmar Remoção", 
+        carregarListaDicas();
+        mostrarMensagem("Dica atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Valida se há uma dica selecionada para remoção
+     * @return true se houver uma dica selecionada, false caso contrário
+     */
+    private boolean eSelecaoValidaParaRemocao() {
+        if (idSelecionado >= 0) return true;
+        
+        mostrarMensagem("Selecione uma dica para remover.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return false;
+    }
+    
+    /**
+     * Solicita confirmação do usuário para remover a dica
+     * @return true se o usuário confirmar a remoção, false caso contrário
+     */
+    private boolean confirmarRemocao() {
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja remover esta dica?",
+            "Confirmar Remoção",
             JOptionPane.YES_NO_OPTION);
-            
-        if (confirmacao == JOptionPane.YES_OPTION) {
-            boolean sucesso = dicasManager.removerFrase(indiceSelecionado);
-            if (sucesso) {
-                carregarListaDicas();
-                JOptionPane.showMessageDialog(this, 
-                    "Dica removida com sucesso!", 
-                    "Sucesso", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Erro ao remover dica.", 
-                    "Erro", 
-                    JOptionPane.ERROR_MESSAGE);
-            }
+        return confirmacao == JOptionPane.YES_OPTION;
+    }
+    
+    /**
+     * Gerencia o processo de remoção de uma dica selecionada
+     * Valida a seleção, solicita confirmação e executa a remoção
+     */
+    private void removerDicaSelecionada() {
+        if (!eSelecaoValidaParaRemocao()) return;
+        if (!confirmarRemocao()) return;
+        
+        boolean sucesso = dicasManager.removerFrase(idSelecionado);
+        if (!sucesso) {
+            mostrarMensagem("Erro ao remover dica.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        
+        carregarListaDicas();
+        mostrarMensagem("Dica removida com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 }

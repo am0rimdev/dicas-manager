@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 public class Dicas {
     public static void main(String[] args) {
         // Caminho do banco SQLite (arquivo local)
-        String dbUrl = "jdbc:sqlite:dicas.db";
+        String dbUrl = "jdbc:sqlite:src/main/java/data/dicas.db";
         DicasManager dicasManager = new DicasManager(dbUrl);
 
         SwingUtilities.invokeLater(() -> {
