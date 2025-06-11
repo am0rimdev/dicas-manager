@@ -1,4 +1,4 @@
-# POOI - Projeto Dica do Dia
+# POOII - Projeto Dica do Dia Integrado com JDBC p/ SQLite
 ### Membros:
 - [Emily Júnia Costa Silva](https://github.com/Emillyjs)
 - [Micael Pereira da Silva](https://github.com/Mikemps)
